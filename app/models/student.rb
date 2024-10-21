@@ -1,7 +1,8 @@
 #TODO: Create a model for Student with the following attributes: first_name, last_name, email, major, and graduation_date.
 #The system should validate that the school_email follows the format name@msudenver.edu. 
 class Student < ApplicationRecord
-    has_one_attached :profile_picture
+    VALID_MAJORS = %w[Computer\ Science Cybersecurity Data\ Science Computer\ Engineering].freeze
+    has_one_attached :profile_picture, dependent: :purge_later
     validates :first_name, presence: true
     validates :last_name, presence: true
     validates :school_email, presence: true

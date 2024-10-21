@@ -46,6 +46,7 @@ gem 'redis', '~> 4.0'  # In-memory data structure store, used as database, cache
 gem 'rubyzip', '~> 2.3.0'
 
 group :development, :test do
+  gem 'faker' # Generates fake data for testing purposes.
   gem 'byebug'  # Debugging tool for Ruby.
   gem 'rspec-rails'  # Testing framework for Rails applications.
   gem 'factory_bot_rails'  # Provides a framework for setting up Ruby objects as test data.
