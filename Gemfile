@@ -55,5 +55,9 @@ end
 # Platform-specific gem for handling timezone data in Windows environments.
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem "image_processing", "~> 1.2"
+
+
+
 # Remember to regularly update dependencies to benefit from security patches, bug fixes, and performance improvements.
 # Use 'bundle update' to update gems while respecting the specified versions.
