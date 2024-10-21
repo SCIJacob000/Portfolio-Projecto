@@ -2,9 +2,17 @@
 
 <div>
   <% if student.profile_picture.attached? %>
-    <%= image_tag student.profile_picture %>
+  <div class="container">
+    <div class="col-md-4 px-0">
+      <%= image_tag student.profile_picture, class: "img-thumbnail" %>
+    </div>
+  </div>
   <% else %>
-    <%= image_tag "default_profile_picture.png" %>
+  <div class="container">
+    <div class="col-md-4 px-0">
+      <%= image_tag "default_profile_picture.png", class: "img-thumbnail" %>
+    </div>
+  </div>
   <% end %>
 </div>
 
