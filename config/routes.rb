@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
-  resources :students
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :students
+  
   root "students#index"
+
+  resources :students do
+    collection do
+      get 'search', action: :index
+    end
+  end
+  
 end

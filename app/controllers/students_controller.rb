@@ -1,11 +1,28 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: %i[ show edit update destroy ]
-
-  # GET /students or /students.json
-  def index
+# GET /students or /students.json
+def index
+  if params[:commit] == "Show All"
     @students = Student.all
+  else
+    # Initialize to no students
+    @students = Student.none
+
+    if params[:major].present?
+      @students = @students.where(major: params[:major])
+    end
+
+    if params[:graduation_date].present?
+      begin
+        parsed_date = Date.parse(params[:graduation_date])
+        @students = @students.where(graduation_date: parsed_date)
+      rescue ArgumentError
+        flash.now[:alert] = "Invalid graduation date format."
+      end
+    end
   end
 
+  @students ||= [] # Ensure @students is initialized if no results
+end
   # GET /students/1 or /students/1.json
   def show
   end

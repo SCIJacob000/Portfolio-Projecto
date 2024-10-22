@@ -1,16 +1,47 @@
-<p style="color: green"><%= notice %></p>
+<%= form_with url: search_students_path, method: :get, local: true, class: "mb-4" do %>
+  <div class="row">
+    <div class="col-md-8">
+      <%= label_tag :major, "Select Major", class: "form-label" %>
+      <%= select_tag :major, options_for_select([
+          ["Computer Science", "Computer Science"],
+          ["Computer Engineering", "Computer Engineering"],
+          ["Cybersecurity", "Cybersecurity"],
+          ["Data Science", "Data Science"]
+        ], params[:major]), class: "form-control" %>
+      
+      <%= label_tag :graduation_date, "Graduation Date", class: "form-label mt-4" %>
+      <%= date_field_tag :graduation_date, params[:graduation_date], class: "form-control" %>
+    </div>
+    <div class="col-md-4">
+      <%= submit_tag "Search", class: "btn btn-primary mt-4" %>
+      <%= submit_tag "Show All", name: "commit", value: "Show All", class: "btn btn-secondary mt-4" %>
+    </div>
+  </div>
+<% end %>
 
-<h1>Students</h1>
 
-<div id="students">
-  <% @students.each do |student| %>
-    <%= render partial: 'student', locals: { student: student } %>
-    <p>
-      <%= link_to "Show this student", student %>
-    </p>
+<div class="row">
+  <% if @students.any? %>
+    <% @students.each do |student| %>
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= student.name %></h5>
+            <p class="card-text">Major: <%= student.major %></p>
+            <p class="card-text">Expected Graduation: <%= student.graduation_date %></p>
+            <%= link_to 'Show Details', student_path(student), class: "btn btn-info" %>
+            <%= link_to 'Edit', edit_student_path(student), class: "btn btn-warning" %>
+            <%= link_to 'Delete', student_path(student), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="col-12">
+      <div class="alert alert-info" role="alert">
+        No students found. Please make a search.
+      </div>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New student", new_student_path %>
-
 
