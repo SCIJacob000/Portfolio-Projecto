@@ -1,11 +1,13 @@
 class StudentsController < ApplicationController
 # GET /students or /students.json
 def index
+  # Initialize @students to none by default
+  @students = Student.none
+
   if params[:commit] == "Show All"
     @students = Student.all
-  else
-    # Initialize to no students
-    @students = Student.none
+  elsif params[:commit] == "Search"
+    @students = Student.all # Initialize to all students
 
     if params[:major].present?
       @students = @students.where(major: params[:major])
@@ -19,10 +21,15 @@ def index
         flash.now[:alert] = "Invalid graduation date format."
       end
     end
-  end
 
-  @students ||= [] # Ensure @students is initialized if no results
+    if params[:query].present?
+      @students = @students.where("name ILIKE ?", "%#{params[:query]}%")
+    end
+  else
+    @students = []
+  end
 end
+
   # GET /students/1 or /students/1.json
   def show
   end
